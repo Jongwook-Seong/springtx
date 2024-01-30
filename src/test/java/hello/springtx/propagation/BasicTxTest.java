@@ -94,4 +94,15 @@ public class BasicTxTest {
         log.info("내부 트랜잭션 커밋");
         txManager.commit(inner);
     }
+
+    @Test
+    void outer_rollback() {
+        log.info("외부 트랜잭션 시작");
+        TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+
+        inner();
+
+        log.info("외부 트랜잭션 롤백");
+        txManager.rollback(outer);
+    }
 }
